@@ -11,31 +11,26 @@
     <div class="card">
       <h1 id="subjectTitle">Notes</h1>
       <p id="subjectText">Notes list will appear here.</p>
-
       <div id="notesList" class="notes-list"></div>
-
       <a class="back" href="notes.html">← Choose Another Subject</a>
     </div>
   </main>
-
   <script>
     const params = new URLSearchParams(window.location.search);
     const subject = params.get('subject');
-
-    const subjects = {
-      physics: 'Physics',
-      chemistry: 'Chemistry',
-      biology: 'Biology'
-    };
-
+    const subjects = { physics: 'Physics', chemistry: 'Chemistry', biology: 'Biology' };
     const title = subjects[subject] || 'Notes';
     document.getElementById('subjectTitle').textContent = title;
-    document.getElementById('subjectText').textContent = subject
-      ? `${title} notes list`
-      : 'Please choose a subject first.';
-
+    document.getElementById('subjectText').textContent = subject ? `${title} notes list` : 'Please choose a subject first.';
     const notesList = document.getElementById('notesList');
-    if (subject) {
+    if (subject === 'physics') {
+      notesList.innerHTML = `
+        <div class="note-card">
+          <h2>Physics Notes Demo</h2>
+          <p>Introduction to Motion</p>
+          <a class="btn download" href="physics_notes_demo.pdf" download>Download PDF</a>
+        </div>`;
+    } else if (subject) {
       notesList.innerHTML = '<div class="empty-note">No notes added yet.</div>';
     }
   </script>
