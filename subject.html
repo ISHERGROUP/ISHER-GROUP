@@ -1,0 +1,43 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Subject Notes - ISHER GROUP</title>
+  <link rel="stylesheet" href="style.css">
+</head>
+<body>
+  <main class="home">
+    <div class="card">
+      <h1 id="subjectTitle">Notes</h1>
+      <p id="subjectText">Notes list will appear here.</p>
+
+      <div id="notesList" class="notes-list"></div>
+
+      <a class="back" href="notes.html">← Choose Another Subject</a>
+    </div>
+  </main>
+
+  <script>
+    const params = new URLSearchParams(window.location.search);
+    const subject = params.get('subject');
+
+    const subjects = {
+      physics: 'Physics',
+      chemistry: 'Chemistry',
+      biology: 'Biology'
+    };
+
+    const title = subjects[subject] || 'Notes';
+    document.getElementById('subjectTitle').textContent = title;
+    document.getElementById('subjectText').textContent = subject
+      ? `${title} notes list`
+      : 'Please choose a subject first.';
+
+    const notesList = document.getElementById('notesList');
+    if (subject) {
+      notesList.innerHTML = '<div class="empty-note">No notes added yet.</div>';
+    }
+  </script>
+</body>
+</html>
