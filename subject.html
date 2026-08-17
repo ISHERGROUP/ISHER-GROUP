@@ -3,7 +3,7 @@
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>Subject Notes - ISHER GROUP</title>
+  <title>NEET 2026 Notes - ISHER GROUP</title>
   <link rel="stylesheet" href="style.css">
 </head>
 <body>
@@ -26,20 +26,18 @@
       physics: {
         title: 'Physics',
         categories: {
-          'Mechanics': [
-            'Physics and Measurement', 'Kinematics', 'Laws of Motion', 'Work, Energy and Power',
-            'Rotational Motion', 'Gravitation'
-          ],
-          'Properties, Heat & Waves': [
-            'Properties of Solids and Liquids', 'Thermodynamics', 'Kinetic Theory of Gases', 'Oscillations and Waves'
-          ],
-          'Electricity & Magnetism': [
-            'Electrostatics', 'Current Electricity', 'Magnetic Effects of Current and Magnetism',
-            'Electromagnetic Induction and Alternating Currents', 'Electromagnetic Waves'
-          ],
-          'Optics & Modern Physics': [
-            'Optics', 'Dual Nature of Matter and Radiation', 'Atoms and Nuclei', 'Electronic Devices', 'Experimental Skills'
-          ]
+          'Physics and Measurement': ['Physics and Measurement', 'Kinematics', 'Laws of Motion'],
+          'Mechanics': ['Work, Energy and Power', 'Rotational Motion', 'Gravitation'],
+          'Properties of Matter': ['Properties of Solids and Liquids', 'Thermodynamics', 'Kinetic Theory of Gases'],
+          'Oscillations and Waves': ['Oscillations and Waves'],
+          'Electrostatics': ['Electric Charges and Fields', 'Electrostatic Potential and Capacitance'],
+          'Current Electricity': ['Current Electricity'],
+          'Magnetic Effects': ['Moving Charges and Magnetism', 'Magnetism and Matter'],
+          'Electromagnetic Induction': ['Electromagnetic Induction', 'Alternating Current'],
+          'Electromagnetic Waves': ['Electromagnetic Waves'],
+          'Optics': ['Ray Optics and Optical Instruments', 'Wave Optics'],
+          'Modern Physics': ['Dual Nature of Matter and Radiation', 'Atoms and Nuclei', 'Electronic Devices'],
+          'Experimental Skills': ['Experimental Skills']
         }
       },
       chemistry: {
@@ -64,15 +62,16 @@
         title: 'Biology',
         categories: {
           'Botany': [
-            'Diversity in Living World', 'Structural Organisation in Animals and Plants — Plant part',
-            'Cell Structure and Function', 'Plant Physiology', 'Sexual Reproduction in Flowering Plants',
-            'Genetics and Evolution — Plant genetics topics', 'Biology and Human Welfare — Microbes in Human Welfare',
-            'Biotechnology and Its Applications', 'Ecology and Environment'
+            'Diversity in Living World', 'Structural Organisation in Animals and Plants', 'Cell Structure and Function',
+            'Plant Physiology', 'Sexual Reproduction in Flowering Plants', 'Principles of Inheritance and Variation',
+            'Molecular Basis of Inheritance', 'Biotechnology: Principles and Processes',
+            'Biotechnology and Its Applications', 'Ecology and Environment', 'Plant Kingdom'
           ],
           'Zoology': [
-            'Diversity in Living World — Animal classification', 'Structural Organisation in Animals and Plants — Animal part',
-            'Human Physiology', 'Human Reproduction', 'Reproductive Health', 'Genetics and Evolution',
-            'Biology and Human Welfare — Human Health and Disease', 'Microbes in Human Welfare',
+            'Animal Kingdom', 'Structural Organisation in Animals and Plants', 'Human Physiology',
+            'Human Reproduction', 'Reproductive Health', 'Principles of Inheritance and Variation',
+            'Molecular Basis of Inheritance', 'Evolution', 'Human Health and Disease',
+            'Microbes in Human Welfare', 'Biotechnology: Principles and Processes',
             'Biotechnology and Its Applications', 'Ecology and Environment'
           ]
         }
@@ -89,7 +88,9 @@
     if (!subjectData) {
       document.getElementById('subjectText').textContent = 'Please choose a subject first.';
     } else if (!category) {
-      document.getElementById('subjectText').textContent = 'Choose a section';
+      document.getElementById('subjectText').textContent = subject === 'chemistry'
+        ? 'Choose Chemistry section'
+        : subject === 'biology' ? 'Choose Biology section' : 'Choose Physics unit';
       categoryList.innerHTML = Object.keys(subjectData.categories).map(name =>
         `<a class="btn subject" href="subject.html?subject=${subject}&category=${encodeURIComponent(name)}">${name}</a>`
       ).join('');
