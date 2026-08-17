@@ -8,30 +8,98 @@
 </head>
 <body>
   <main class="home">
-    <div class="card">
+    <div class="card wide-card">
       <h1 id="subjectTitle">Notes</h1>
-      <p id="subjectText">Notes list will appear here.</p>
-      <div id="notesList" class="notes-list"></div>
+      <p id="subjectText">Choose a section</p>
+      <div id="categoryList" class="buttons subject-buttons"></div>
+      <div id="chapterList" class="chapter-list"></div>
       <a class="back" href="notes.html">← Choose Another Subject</a>
     </div>
   </main>
+
   <script>
     const params = new URLSearchParams(window.location.search);
     const subject = params.get('subject');
-    const subjects = { physics: 'Physics', chemistry: 'Chemistry', biology: 'Biology' };
-    const title = subjects[subject] || 'Notes';
+    const category = params.get('category');
+
+    const data = {
+      physics: {
+        title: 'Physics',
+        categories: {
+          'Mechanics': [
+            'Physics and Measurement', 'Kinematics', 'Laws of Motion', 'Work, Energy and Power',
+            'Rotational Motion', 'Gravitation'
+          ],
+          'Properties, Heat & Waves': [
+            'Properties of Solids and Liquids', 'Thermodynamics', 'Kinetic Theory of Gases', 'Oscillations and Waves'
+          ],
+          'Electricity & Magnetism': [
+            'Electrostatics', 'Current Electricity', 'Magnetic Effects of Current and Magnetism',
+            'Electromagnetic Induction and Alternating Currents', 'Electromagnetic Waves'
+          ],
+          'Optics & Modern Physics': [
+            'Optics', 'Dual Nature of Matter and Radiation', 'Atoms and Nuclei', 'Electronic Devices', 'Experimental Skills'
+          ]
+        }
+      },
+      chemistry: {
+        title: 'Chemistry',
+        categories: {
+          'Physical Chemistry': [
+            'Some Basic Concepts in Chemistry', 'Atomic Structure', 'Chemical Bonding and Molecular Structure',
+            'Chemical Thermodynamics', 'Solutions', 'Equilibrium', 'Redox Reactions and Electrochemistry', 'Chemical Kinetics'
+          ],
+          'Inorganic Chemistry': [
+            'Classification of Elements and Periodicity in Properties', 'P-Block Elements',
+            'D- and F-Block Elements', 'Coordination Compounds'
+          ],
+          'Organic Chemistry': [
+            'Purification and Characterisation of Organic Compounds', 'Some Basic Principles of Organic Chemistry',
+            'Hydrocarbons', 'Organic Compounds Containing Halogens', 'Organic Compounds Containing Oxygen',
+            'Organic Compounds Containing Nitrogen', 'Biomolecules', 'Principles Related to Practical Chemistry'
+          ]
+        }
+      },
+      biology: {
+        title: 'Biology',
+        categories: {
+          'Botany': [
+            'Diversity in Living World', 'Structural Organisation in Animals and Plants — Plant part',
+            'Cell Structure and Function', 'Plant Physiology', 'Sexual Reproduction in Flowering Plants',
+            'Genetics and Evolution — Plant genetics topics', 'Biology and Human Welfare — Microbes in Human Welfare',
+            'Biotechnology and Its Applications', 'Ecology and Environment'
+          ],
+          'Zoology': [
+            'Diversity in Living World — Animal classification', 'Structural Organisation in Animals and Plants — Animal part',
+            'Human Physiology', 'Human Reproduction', 'Reproductive Health', 'Genetics and Evolution',
+            'Biology and Human Welfare — Human Health and Disease', 'Microbes in Human Welfare',
+            'Biotechnology and Its Applications', 'Ecology and Environment'
+          ]
+        }
+      }
+    };
+
+    const subjectData = data[subject];
+    const title = subjectData ? subjectData.title : 'Notes';
     document.getElementById('subjectTitle').textContent = title;
-    document.getElementById('subjectText').textContent = subject ? `${title} notes list` : 'Please choose a subject first.';
-    const notesList = document.getElementById('notesList');
-    if (subject === 'physics') {
-      notesList.innerHTML = `
-        <div class="note-card">
-          <h2>Physics Notes Demo</h2>
-          <p>Introduction to Motion</p>
-          <a class="btn download" href="physics_notes_demo.pdf" download>Download PDF</a>
-        </div>`;
-    } else if (subject) {
-      notesList.innerHTML = '<div class="empty-note">No notes added yet.</div>';
+
+    const categoryList = document.getElementById('categoryList');
+    const chapterList = document.getElementById('chapterList');
+
+    if (!subjectData) {
+      document.getElementById('subjectText').textContent = 'Please choose a subject first.';
+    } else if (!category) {
+      document.getElementById('subjectText').textContent = 'Choose a section';
+      categoryList.innerHTML = Object.keys(subjectData.categories).map(name =>
+        `<a class="btn subject" href="subject.html?subject=${subject}&category=${encodeURIComponent(name)}">${name}</a>`
+      ).join('');
+    } else {
+      const chapters = subjectData.categories[category] || [];
+      document.getElementById('subjectText').textContent = `${category} — NEET UG 2026 syllabus`;
+      chapterList.innerHTML = chapters.map((chapter, index) =>
+        `<div class="chapter-card"><span>${index + 1}. ${chapter}</span><a class="small-btn" href="#">Notes</a></div>`
+      ).join('');
+      categoryList.innerHTML = `<a class="btn subject" href="subject.html?subject=${subject}">← Back to Sections</a>`;
     }
   </script>
 </body>
