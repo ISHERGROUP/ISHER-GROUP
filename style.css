@@ -70,6 +70,36 @@ p {
   background: #25d366;
 }
 
+.notes {
+  background: #7c3aed;
+}
+
+.subject {
+  background: #374151;
+}
+
+.back {
+  display: inline-block;
+  margin-top: 28px;
+  color: #d1d5db;
+  text-decoration: none;
+}
+
+.back:hover {
+  color: #fff;
+}
+
+.notes-list {
+  margin-top: 10px;
+}
+
+.empty-note {
+  padding: 18px;
+  border-radius: 12px;
+  background: rgba(255, 255, 255, 0.08);
+  color: #d1d5db;
+}
+
 @media (max-width: 480px) {
   h1 {
     font-size: 32px;
