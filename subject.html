@@ -43,54 +43,29 @@
       chemistry: {
         title: 'Chemistry',
         categories: {
-          'Physical Chemistry': [
-            'Some Basic Concepts in Chemistry', 'Atomic Structure', 'Chemical Bonding and Molecular Structure',
-            'Chemical Thermodynamics', 'Solutions', 'Equilibrium', 'Redox Reactions and Electrochemistry', 'Chemical Kinetics'
-          ],
-          'Inorganic Chemistry': [
-            'Classification of Elements and Periodicity in Properties', 'P-Block Elements',
-            'D- and F-Block Elements', 'Coordination Compounds'
-          ],
-          'Organic Chemistry': [
-            'Purification and Characterisation of Organic Compounds', 'Some Basic Principles of Organic Chemistry',
-            'Hydrocarbons', 'Organic Compounds Containing Halogens', 'Organic Compounds Containing Oxygen',
-            'Organic Compounds Containing Nitrogen', 'Biomolecules', 'Principles Related to Practical Chemistry'
-          ]
+          'Physical Chemistry': ['Some Basic Concepts in Chemistry', 'Atomic Structure', 'Chemical Bonding and Molecular Structure', 'Chemical Thermodynamics', 'Solutions', 'Equilibrium', 'Redox Reactions and Electrochemistry', 'Chemical Kinetics'],
+          'Inorganic Chemistry': ['Classification of Elements and Periodicity in Properties', 'P-Block Elements', 'D- and F-Block Elements', 'Coordination Compounds'],
+          'Organic Chemistry': ['Purification and Characterisation of Organic Compounds', 'Some Basic Principles of Organic Chemistry', 'Hydrocarbons', 'Organic Compounds Containing Halogens', 'Organic Compounds Containing Oxygen', 'Organic Compounds Containing Nitrogen', 'Biomolecules', 'Principles Related to Practical Chemistry']
         }
       },
       biology: {
         title: 'Biology',
         categories: {
-          'Botany': [
-            'Diversity in Living World', 'Structural Organisation in Animals and Plants', 'Cell Structure and Function',
-            'Plant Physiology', 'Sexual Reproduction in Flowering Plants', 'Principles of Inheritance and Variation',
-            'Molecular Basis of Inheritance', 'Biotechnology: Principles and Processes',
-            'Biotechnology and Its Applications', 'Ecology and Environment', 'Plant Kingdom'
-          ],
-          'Zoology': [
-            'Animal Kingdom', 'Structural Organisation in Animals and Plants', 'Human Physiology',
-            'Human Reproduction', 'Reproductive Health', 'Principles of Inheritance and Variation',
-            'Molecular Basis of Inheritance', 'Evolution', 'Human Health and Disease',
-            'Microbes in Human Welfare', 'Biotechnology: Principles and Processes',
-            'Biotechnology and Its Applications', 'Ecology and Environment'
-          ]
+          'Botany': ['Diversity in Living World', 'Structural Organisation in Animals and Plants', 'Cell Structure and Function', 'Plant Physiology', 'Sexual Reproduction in Flowering Plants', 'Principles of Inheritance and Variation', 'Molecular Basis of Inheritance', 'Biotechnology: Principles and Processes', 'Biotechnology and Its Applications', 'Ecology and Environment', 'Plant Kingdom'],
+          'Zoology': ['Animal Kingdom', 'Structural Organisation in Animals and Plants', 'Human Physiology', 'Human Reproduction', 'Reproductive Health', 'Principles of Inheritance and Variation', 'Molecular Basis of Inheritance', 'Evolution', 'Human Health and Disease', 'Microbes in Human Welfare', 'Biotechnology: Principles and Processes', 'Biotechnology and Its Applications', 'Ecology and Environment']
         }
       }
     };
 
     const subjectData = data[subject];
-    const title = subjectData ? subjectData.title : 'Notes';
-    document.getElementById('subjectTitle').textContent = title;
-
+    document.getElementById('subjectTitle').textContent = subjectData ? subjectData.title : 'Notes';
     const categoryList = document.getElementById('categoryList');
     const chapterList = document.getElementById('chapterList');
 
     if (!subjectData) {
       document.getElementById('subjectText').textContent = 'Please choose a subject first.';
     } else if (!category) {
-      document.getElementById('subjectText').textContent = subject === 'chemistry'
-        ? 'Choose Chemistry section'
-        : subject === 'biology' ? 'Choose Biology section' : 'Choose Physics unit';
+      document.getElementById('subjectText').textContent = subject === 'chemistry' ? 'Choose Chemistry section' : subject === 'biology' ? 'Choose Biology section' : 'Choose Physics unit';
       categoryList.innerHTML = Object.keys(subjectData.categories).map(name =>
         `<a class="btn subject" href="subject.html?subject=${subject}&category=${encodeURIComponent(name)}">${name}</a>`
       ).join('');
