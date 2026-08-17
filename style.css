@@ -29,9 +29,17 @@ body {
   backdrop-filter: blur(10px);
 }
 
+.wide-card {
+  width: min(100%, 760px);
+}
+
 h1 {
   font-size: 42px;
   margin-bottom: 12px;
+}
+
+h2 {
+  margin-bottom: 8px;
 }
 
 p {
@@ -62,21 +70,10 @@ p {
   opacity: 0.9;
 }
 
-.telegram {
-  background: #229ed9;
-}
-
-.whatsapp {
-  background: #25d366;
-}
-
-.notes {
-  background: #7c3aed;
-}
-
-.subject {
-  background: #374151;
-}
+.telegram { background: #229ed9; }
+.whatsapp { background: #25d366; }
+.notes { background: #7c3aed; }
+.subject { background: #374151; }
 
 .back {
   display: inline-block;
@@ -85,13 +82,9 @@ p {
   text-decoration: none;
 }
 
-.back:hover {
-  color: #fff;
-}
+.back:hover { color: #fff; }
 
-.notes-list {
-  margin-top: 10px;
-}
+.notes-list { margin-top: 10px; }
 
 .empty-note {
   padding: 18px;
@@ -100,12 +93,36 @@ p {
   color: #d1d5db;
 }
 
-@media (max-width: 480px) {
-  h1 {
-    font-size: 32px;
-  }
+.chapter-list {
+  margin-top: 20px;
+  display: grid;
+  gap: 10px;
+  text-align: left;
+}
 
-  .btn {
-    width: 100%;
-  }
+.chapter-card {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 12px;
+  padding: 14px 16px;
+  border-radius: 12px;
+  background: rgba(255, 255, 255, 0.08);
+}
+
+.small-btn {
+  flex-shrink: 0;
+  padding: 8px 12px;
+  border-radius: 8px;
+  background: #7c3aed;
+  color: #fff;
+  text-decoration: none;
+  font-size: 13px;
+  font-weight: 700;
+}
+
+@media (max-width: 480px) {
+  h1 { font-size: 32px; }
+  .btn { width: 100%; }
+  .chapter-card { align-items: flex-start; }
 }
