@@ -5,6 +5,7 @@
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <title>NEET 2026 Notes - ISHER GROUP</title>
   <link rel="stylesheet" href="style.css">
+  <script src="https://checkout.razorpay.com/v1/checkout.js"></script>
 </head>
 <body>
   <main class="home">
@@ -18,6 +19,7 @@
   </main>
 
   <script>
+    const RAZORPAY_KEY_ID = 'rzp_test_TQqxKkTxBh1AhW';
     const params = new URLSearchParams(window.location.search);
     const subject = params.get('subject');
     const category = params.get('category');
@@ -39,7 +41,7 @@
       }},
       biology: { title: 'Biology', categories: {
         'Botany': ['Diversity in Living World', 'Structural Organisation in Animals and Plants', 'Cell Structure and Function', 'Plant Physiology', 'Sexual Reproduction in Flowering Plants', 'Principles of Inheritance and Variation', 'Molecular Basis of Inheritance', 'Biotechnology: Principles and Processes', 'Biotechnology and Its Applications', 'Ecology and Environment', 'Plant Kingdom'],
-        'Zoology': ['Animal Kingdom', 'Structural Organisation in Animals and Plants', 'Human Physiology', 'Human Reproduction', 'Reproductive Health', 'Principles of Inheritance and Variation', 'Molecular Basis of Inheritance', 'Evolution', 'Human Health and Disease', 'Microbes in Human Welfare', 'Biotechnology: Principles and Processes', 'Biotechnology and Its Applications', 'Ecology and Environment']
+        'Zoology': ['Animal Kingdom', 'Structural Organisation in Animals and Plants', 'Human Physiology', 'Human Reproduction', 'Reproductive Health', 'Principles of Inheritance and Variation', 'Molecular Basis of Inheritance', 'Evolution', 'Human Health and Disease', 'Microbes in Human Welfare', 'Biotechnology: Principles and Applications', 'Ecology and Environment']
       }}
     };
 
@@ -47,6 +49,40 @@
     document.getElementById('subjectTitle').textContent = subjectData ? subjectData.title : 'Notes';
     const categoryList = document.getElementById('categoryList');
     const chapterList = document.getElementById('chapterList');
+
+    async function payForCellBiology() {
+      try {
+        const response = await fetch('/api/create-order', { method: 'POST' });
+        const order = await response.json();
+        if (!response.ok) throw new Error(order.error || 'Could not create order');
+
+        const options = {
+          key: RAZORPAY_KEY_ID,
+          amount: order.amount,
+          currency: order.currency,
+          name: 'ISHER GROUP',
+          description: 'Cell Biology Notes',
+          order_id: order.id,
+          handler: async function (payment) {
+            const verifyResponse = await fetch('/api/verify-payment', {
+              method: 'POST',
+              headers: { 'Content-Type': 'application/json' },
+              body: JSON.stringify(payment)
+            });
+            const result = await verifyResponse.json();
+            if (verifyResponse.ok && result.success) {
+              window.location.href = 'success.html';
+            } else {
+              alert('Payment verification failed. Please contact support.');
+            }
+          },
+          theme: { color: '#7c3aed' }
+        };
+        new Razorpay(options).open();
+      } catch (error) {
+        alert(error.message || 'Payment could not be started.');
+      }
+    }
 
     if (!subjectData) {
       document.getElementById('subjectText').textContent = 'Please choose a subject first.';
@@ -58,9 +94,10 @@
       document.getElementById('subjectText').textContent = `${category} — NEET UG 2026 syllabus`;
       chapterList.innerHTML = chapters.map((chapter, index) => {
         const isCellBiology = subject === 'biology' && category === 'Botany' && chapter === 'Cell Structure and Function';
-        const noteLink = isCellBiology ? 'biology-cell-notes.pdf' : '#';
-        const download = isCellBiology ? ' download="Cell-Biology-Notes.pdf"' : '';
-        return `<div class="chapter-card"><span>${index + 1}. ${chapter}</span><a class="small-btn" href="${noteLink}"${download}>Notes</a></div>`;
+        if (isCellBiology) {
+          return `<div class="chapter-card"><span>${index + 1}. ${chapter}</span><div class="note-actions"><a class="small-btn" href="biology-cell-notes.pdf" target="_blank" rel="noopener">Demo View</a><button class="small-btn pay-btn" type="button" onclick="payForCellBiology()">Pay &amp; Get</button></div></div>`;
+        }
+        return `<div class="chapter-card"><span>${index + 1}. ${chapter}</span><a class="small-btn" href="#">Notes</a></div>`;
       }).join('');
       categoryList.innerHTML = `<a class="btn subject" href="subject.html?subject=${subject}">← Back to Sections</a>`;
     }
